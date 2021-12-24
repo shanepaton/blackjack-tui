@@ -27,7 +27,7 @@ int excusionRand(int min, int max, int excusion[], int excusionIndex) {
     }   
 }
 
-void deal(int randNumber, Card cardToModify[],int cardIndex) {
+void deal(int randNumber, Card* cardToModify[],int cardIndex) {
     static char *suits = "SDHC";
     static char faces[13] = {'A','2','3','4','5','6','7','8','9','X','J','Q','K'};
 
@@ -38,8 +38,8 @@ void deal(int randNumber, Card cardToModify[],int cardIndex) {
     
     printf("%c%c\n", initialSuit, initialValue);
 
-    cardToModify[cardIndex].suit = initialSuit;
-    cardToModify[cardIndex].value = initialValue;
+    // cardToModify[cardIndex].suit = initialSuit;
+    // cardToModify[cardIndex].value = initialValue;
 
     // if(pulledCards[arrayOfCardsIndex] == 0) {
     //     cardToModify.suit = suits[randNumber/13];
