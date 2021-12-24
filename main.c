@@ -1,59 +1,57 @@
 #include <stdio.h>
 #include <time.h>
+
 #include "greetings.h"
 #include "fileio.h"
-#include "stats.h"
 #include "cards.h"
+#include "player.h"
 
-void deal(int randNumber, Card cardToModify, int arrayOfCards[]) {
+void deal(int randNumber, Card cardToModify[], int pulledCards[], int pulledCardsIndex) {
     static char *suits = "SDHC";
     static char faces[13] = {'A','2','3','4','5','6','7','8','9','X','J','Q','K'};
 
-    printf ("%c%c\n", faces[randNumber%13], suits[randNumber/13]);
+    // int initialSuit = faces[randNumber%13];
+    // int initialValue = suits[randNumber/13];
 
-    printf("%c\n", randNumber);
+    // printf("%d\n", initialValue);
+    // printf("%d\n", initialSuit);
+
+    // if(arrayOfCards[arrayOfCardsIndex] == 0) {
+    //     cardToModify.suit = suits[randNumber/13];
+    //     cardToModify.value = faces[randNumber%13];
+    //     arrayOfCards[arrayOfCardsIndex] = randNumber;
+    // }
+    
+    // else {
+    //     printf("Card already dealt.\n");
+    // }
+
+
+    // //cardToModify.suit = suits + randNumber % 4;
+    // printf ("%c%c\n", faces[randNumber%13], suits[randNumber/13]);
+
+    // printf("%c\n", randNumber);
 
 }
 
 
 int main(){
-    
     srand(time(NULL));
-    //TODO: make default name "The Player"-
-
-    char* name;
-    int tokens = 1000;
-    Card playerCards[5];
-
-    char* tbMOne = readFile("names.txt", rand() % 100);
-    Card tbmOneCards[5];
-
-    char* tbMTwo = readFile("names.txt", rand() % 100);
-    Card tbmTwoCards[5];
-
-    char* tbMThree = readFile("names.txt", rand() % 100);
-    Card tbmThreeCards[5];
-
-    char* tbMFour = readFile("names.txt", rand() % 100);
-    Card tbmFourCards[5];
-
-
-    //Intro
-    //FIXME: Handle blank name from config
-    greet(readFile("config.txt", 1));
     
-    printf("%s, %s, %s, and %s are sitting at the table.\n", strtok(tbMOne,"\n"), strtok(tbMTwo,"\n"), strtok(tbMThree,"\n"), strtok(tbMFour,"\n"));
-    printf("The game starts.\n");
-    printf("You and your tablemates are dealt two cards.\n");
+    Player player = {readFile("config.txt", 1), 1000 };
 
-    //Deal cards
+    Player tbmOne = {readFile("names.txt", rand() % 100), 1000 };
+    Player tbmTwo = {readFile("names.txt", rand() % 100), 1000 };
+    Player tbmThree = {readFile("names.txt", rand() % 100), 1000 };
+    Player tbmFour = {readFile("names.txt", rand() % 100), 1000 };
 
-    // No one could ever possibly have more than 5 cards but... 
+    greet(player.name, tbmOne.name, tbmTwo.name, tbmThree.name, tbmFour.name);
+
     int cardsPulled[30];
-    
-    // 0 - 51
-    deal(51, playerCards[0], cardsPulled);
-    
+    int cardsPulledIndex = 0;
 
+
+    // 0 - 51
+    deal(51, player.hand[0], cardsPulled, cardsPulledIndex);
     return 0;
 }

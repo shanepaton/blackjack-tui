@@ -4,6 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void greet(char* name);
+void greet(char* name, char* tbOneName, char* tbTwoName, char* tbThreeName, char* tbFourName);
 
 #endif

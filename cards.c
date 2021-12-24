@@ -5,3 +5,4 @@ typedef struct Card
     char* suit;
     int value;
 }Card;
+
