@@ -7,8 +7,10 @@ typedef struct Player
     char* name;
     int tokens;
     int hand_size;
-    Card* hand[5];
+    Card hand[5];
 }Player;
+
+void turn(Player* p);
 
 
 #endif

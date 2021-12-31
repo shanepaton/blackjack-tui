@@ -1,5 +1,5 @@
-#ifndef GREETINGS_H
-#define GREETINGS_H
+#ifndef GREET_H
+#define GREET_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

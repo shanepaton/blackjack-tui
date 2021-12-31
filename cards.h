@@ -4,8 +4,9 @@
 
 typedef struct Card
 {
-    char* suit;
+    char suit;
     int value;
 }Card;
+
 
 #endif

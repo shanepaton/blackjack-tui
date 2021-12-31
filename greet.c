@@ -1,4 +1,4 @@
-#include "greetings.h"
+#include "greet.h"
 
 void greet(char* name, char* tbOneName, char* tbTwoName, char* tbThreeName, char* tbFourName){
     //ASCII art
@@ -16,7 +16,7 @@ void greet(char* name, char* tbOneName, char* tbTwoName, char* tbThreeName, char
     
         printf("%s, %s, %s, and %s are sitting at the table.\n", strtok(tbOneName,"\n"), strtok(tbTwoName,"\n"), strtok(tbThreeName,"\n"), strtok(tbFourName,"\n"));
         printf("The game starts.\n");
-        printf("You and your tablemates are dealt two cards.\n");
+        printf("You and your tablemates are dealt two cards each.\n");
     }
     else{
         printf("Goodbye!\n");

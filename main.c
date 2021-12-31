@@ -1,67 +1,52 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
-#include "greetings.h"
+#include "greet.h"
 #include "fileio.h"
 #include "cards.h"
 #include "player.h"
+#include "erand.h"
 
-int excusionRand(int min, int max, int excusion[], int excusionIndex) {
-    while (1) {
-        int randNum = rand() % (max - min + 1) + min;
-        int i;
-        for (i = 0; i < sizeof(excusion); i++) {
-            if (randNum == excusion[i]) {
-                break;
-            }
-        }
-        if (i == sizeof(excusion)) {
-            // set the excusion array to the new number
-            printf("%d\n", randNum);
-            excusion[excusionIndex] = randNum;
-
-            printf("%d, ", excusion[excusionIndex]);
-            return randNum;
-
-        }
-    }   
-}
-
-void deal(int randNumber, Card* cardToModify[],int cardIndex) {
+void deal(int randNumber, Player* p,int cardIndex) {
     static char *suits = "SDHC";
     static char faces[13] = {'A','2','3','4','5','6','7','8','9','X','J','Q','K'};
 
-   
+    int randomChosenNumber = randNumber%13;
+    int numberValue;
 
-    int initialSuit = faces[randNumber%13];
-    int initialValue = suits[randNumber/13];
-    
-    printf("%c%c\n", initialSuit, initialValue);
+    if(randomChosenNumber >0 && randomChosenNumber <8) {
+        numberValue = randomChosenNumber;
+    }
+    else if(randomChosenNumber == 10) {
+        numberValue = 10;
+    }
+    else if(randomChosenNumber == 11) {
+        numberValue = 10;
+    }
+    else if(randomChosenNumber == 12) {
+        numberValue = 10;
+    }
+    else if(randomChosenNumber == 0) {
+        numberValue = 11;
+    }
 
-    // cardToModify[cardIndex].suit = initialSuit;
-    // cardToModify[cardIndex].value = initialValue;
+    int initialSuit = suits[randNumber/13];
+    int initialValue = faces[randNumber%13];
 
-    // if(pulledCards[arrayOfCardsIndex] == 0) {
-    //     cardToModify.suit = suits[randNumber/13];
-    //     cardToModify.value = faces[randNumber%13];
-    //     arrayOfCards[arrayOfCardsIndex] = randNumber;
-    // }
-    
-    // else {
-    //     printf("Card already dealt.\n");
-    // }
+    printf("%c, %d\n", initialSuit, initialValue);
 
+    p->hand[cardIndex].suit =  initialSuit;
+    p->hand[cardIndex].value = numberValue;
+    printf("%d\n", numberValue);
+    p->hand_size++;
 
-    // //cardToModify.suit = suits + randNumber % 4;
-    // printf ("%c%c\n", faces[randNumber%13], suits[randNumber/13]);
-
-    // printf("%c\n", randNumber);
 }
 
 
 int main(){
     srand(time(NULL));
-    
+
     Player player = {readFile("config.txt", 1), 1000 };
 
     Player tbmOne = {readFile("names.txt", rand() % 100), 1000 };
@@ -70,14 +55,24 @@ int main(){
     Player tbmFour = {readFile("names.txt", rand() % 100), 1000 };
 
     greet(player.name, tbmOne.name, tbmTwo.name, tbmThree.name, tbmFour.name);
-    //bool stillPlaying = true;
+    
+    // --- TURN LOGIC ---
+    
+    bool stillPlaying = true;
 
     int cardsPulled[30];
     int cardsPulledIndex = 0;
+    int round = 0;
 
-    // 0 - 51
-    deal(excusionRand(0, 51, cardsPulled, cardsPulledIndex), player.hand[0], player.hand_size);
-    printf("asd");
-    //printf("%d\n", player.hand[0]->value);
+    // First turn deal two cards to each player
+    for(int i = 0; i < 2; i++) {
+        deal(erand(0, 51, cardsPulled, cardsPulledIndex), &player, player.hand_size);
+        deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmOne, tbmOne.hand_size);
+        deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmTwo, tbmTwo.hand_size);
+        deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmThree, tbmThree.hand_size);
+        deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmFour, tbmFour.hand_size);
+    }
+    turn(&player);
+
     return 0;
 }
