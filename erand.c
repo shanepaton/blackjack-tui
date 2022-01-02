@@ -7,12 +7,12 @@ int erand(int min, int max, int excusion[], int excusionIndex) {
     while (1) {
         int randNum = rand() % (max - min + 1) + min;
         int i;
-        for (i = 0; i < sizeof(excusion); i++) {
+        for (i = 0; i < 30; i++) {
             if (randNum == excusion[i]) {
                 break;
             }
         }
-        if (i == sizeof(excusion)) {
+        if (i == 30) {
             // set the excusion array to the new number
             //printf("%d\n", randNum);
             excusion[excusionIndex] = randNum;

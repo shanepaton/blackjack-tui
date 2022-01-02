@@ -28,17 +28,15 @@ void deal(int randNumber, Player* p,int cardIndex) {
         numberValue = 10;
     }
     else if(randomChosenNumber == 0) {
-        numberValue = 11;
+        numberValue = 1;
     }
 
     int initialSuit = suits[randNumber/13];
     int initialValue = faces[randNumber%13];
 
-    printf("%c, %d\n", initialSuit, initialValue);
 
     p->hand[cardIndex].suit =  initialSuit;
     p->hand[cardIndex].value = numberValue;
-    printf("%d\n", numberValue);
     p->hand_size++;
 
 }
@@ -59,7 +57,7 @@ int main(){
     // --- TURN LOGIC ---
     
     bool stillPlaying = true;
-
+        
     int cardsPulled[30];
     int cardsPulledIndex = 0;
     int round = 0;
@@ -72,7 +70,44 @@ int main(){
         deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmThree, tbmThree.hand_size);
         deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmFour, tbmFour.hand_size);
     }
-    turn(&player);
+    while(stillPlaying) {
+        // Player's turn
+        turn(&player, stillPlaying);
+        // TBM's turn
+        if(tbmOne.hand_size < 16) {
+            deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmOne, tbmOne.hand_size);
+            printf("%s hits.\n", tbmOne.name);
+        }
+        else {
+            printf("%s stays.\n", tbmOne.name);
+        }
+
+        if(tbmTwo.hand_size < 16) {
+            deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmTwo, tbmTwo.hand_size);
+            printf("%s hits.\n", tbmTwo.name);
+        }
+        else {
+            printf("%s stays.\n", tbmTwo.name);
+        }
+
+        if(tbmThree.hand_size < 16) {
+            deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmThree, tbmThree.hand_size);
+            printf("%s hits.\n", tbmThree.name);
+        }
+        else {
+            printf("%s stays.\n", tbmThree.name);
+        }
+
+        if(tbmFour.hand_size < 16) {
+            deal(erand(0, 51, cardsPulled, cardsPulledIndex), &tbmFour, tbmFour.hand_size);
+            printf("%s hits.\n", tbmFour.name);
+        }
+        else {
+            printf("%s stays.\n", tbmFour.name);
+        }
+
+        round++;
+    }
 
     return 0;
 }

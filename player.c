@@ -3,7 +3,7 @@
 #include <wchar.h>
 #include "player.h"
 
-void turn(Player* p) {
+void turn(Player* p, bool stillPlaying) {
 	printf("It's Your turn.\n");
 	printf("Stats:\n");
 	printf("------------------YOUR STATS---------------------\n");
@@ -15,7 +15,7 @@ void turn(Player* p) {
 	}
 	printf("\n");
 	for (int i = 0; i < p->hand_size; i++) {
-		char* suit = p->hand[i].suit;
+		char suit = p->hand[i].suit;
 		// if (p->hand[i].suit == 'S') {
 		// 	suit = 	"♠";
 		// }
@@ -34,13 +34,24 @@ void turn(Player* p) {
 			printf("│%d      %c│", p->hand[i].value, suit);
 		}
 	}
-	char response[256];
-	scanf("%s", response);
-	if(strcmp(response, "b") == 0) {
-		
-	}
-	else{
-		printf("Goodbye!\n");
-		exit(0);
+	printf("\n");	
+	//print the bottom of the carsd
+	printf("--------------------------------------------------\n");
+	
+	printf("Hit or stand? (h/s)\n");
+	char response[50];
+	while(1) {
+		scanf("%s", response);
+		if(strcmp(response, "hit") == 0 || strcmp(response, "h") == 0) {
+			printf("You chose to hit.\n");
+			break;
+		}
+		else if(strcmp(response, "stay") == 0 || strcmp(response, "stay") == 0 || strcmp(response, "s") == 0) {
+			printf("You chose to stay.\n");
+			break;
+		}
+		else {
+			printf("Please enter either hit or stay.\n");
+		}
 	}
 }
